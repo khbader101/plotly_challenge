@@ -33,5 +33,3 @@ function graph(sampleData) {
       Plotly.newPlot('bar', data);
     });
 };
-
-graph("940");
