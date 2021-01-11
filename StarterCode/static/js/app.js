@@ -1,8 +1,8 @@
-d3.json('sample.json').then((data)=> {
-    var string = data.name;
+d3.json('samples.json').then((data)=> {
+    var string = data.names;
     console.log(data.metadata);
     var fixed = d3.selectAll('#selDataset');
-    Object.defineProperties(string).forEach(([i,j]) =>{
+    Object.entries(string).forEach(([i,j]) =>{
         fixed.append('option').text(j);
     })
 })
@@ -13,6 +13,8 @@ function graph(sampleData) {
         var samples = data.samples;
 
         var numbers = samples.map(row=>row.id).indexOf(sampleData);
+
+        var topTen = samples.map(row=>row.sample_values);
         var topTen = topTen[numbers].slice(0,10).reverse();
 
         var topTenId = samples.map(row=>row.otu_ids);
@@ -22,8 +24,8 @@ function graph(sampleData) {
         var labels = labels[numbers].slice(0,10);
 
         var trace = {
-            x:topTen,
-            y: topTenId.map(x=> 'UTO ${x}'),
+            x: topTen,
+            y: topTenId.map(x=> `UTO ${x}`),
             text: labels,
             type: 'bar',
             orientation: 'h'
@@ -32,4 +34,9 @@ function graph(sampleData) {
 
       Plotly.newPlot('bar', data);
     });
-};
+        
+    }
+    
+graph("940");
+
+
